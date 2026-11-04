@@ -275,7 +275,8 @@ footer .note{margin-top:64px;font-size:13px;color:#8A909A;max-width:780px}
 .rules .lab{font:600 11px 'JetBrains Mono';letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin-right:4px}
 .rules span:not(.lab){font-size:13px;color:#E6E9ED;border:1px solid var(--dline);border-radius:999px;padding:5px 12px}
 @media (prefers-reduced-motion:reduce){.wires path{animation:none}}
-@media (max-width:1120px){
+@media (min-width:981px) and (max-width:1120px){.dgm{grid-template-columns:170px 36px 1fr 36px 190px}}
+@media (max-width:980px){
   .dgm{grid-template-columns:1fr;gap:16px}
   .wires{display:none}
   .dcol:first-child{display:grid;grid-template-columns:repeat(3,1fr)}
