@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Clément Dion · AI Operations</title>
+<meta name="description" content="AI agents and automations in daily use across a scale-up: what changed, how they are built, and the quality bar behind them.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0E1116;--ink2:#161B23;--lime:#C6F432;--cream:#F2EEE4;--card:#FAF7F0;--line:#E2DCCD;--grey:#6B675E;--mute:#9AA0AA;--orange:#C2570C;--green:#2F6B4A;--red:#B23A1E;--redbg:#F8E9E4}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--cream);color:var(--ink);font:400 17px/1.55 Inter,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+img{max-width:100%;display:block}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+.mono{font-family:'JetBrains Mono',monospace}
+.pill{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:99px;font:600 12px 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase;background:var(--ink);color:var(--lime)}
+.dark .pill{background:var(--lime);color:var(--ink)}
+h1,h2,h3{font-family:'Space Grotesk',sans-serif;letter-spacing:-.02em;line-height:1.08}
+h1{font-size:clamp(38px,6vw,68px);font-weight:700;margin-top:22px}
+h1 em{font-style:normal;background:var(--lime);padding:0 .12em;border-radius:6px}
+h2{font-size:clamp(28px,4vw,44px);font-weight:700;margin-top:16px}
+h3{font-size:21px;font-weight:600}
+.lede{font-size:clamp(17px,2vw,20px);color:var(--grey);margin-top:18px;max-width:780px}
+.dark .lede{color:#B9BEC7}
+
+/* nav */
+nav{position:sticky;top:0;z-index:10;background:rgba(242,238,228,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:56px}
+nav .me{font:700 16px 'Space Grotesk',sans-serif;text-decoration:none;white-space:nowrap}
+nav ul{display:flex;gap:20px;list-style:none;font:500 12px 'JetBrains Mono',monospace;letter-spacing:.08em;text-transform:uppercase;overflow-x:auto;scrollbar-width:none}
+nav ul::-webkit-scrollbar{display:none}
+nav ul a{text-decoration:none;color:var(--grey);white-space:nowrap}
+nav ul a:hover{color:var(--ink)}
+
+section{padding:88px 0}
+section.dark{background:var(--ink);color:#F4F1EA}
+.hero{padding:72px 0 64px}
+.ctas{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+.btn{display:inline-flex;align-items:center;height:44px;padding:0 18px;border-radius:12px;font:600 15px Inter,sans-serif;text-decoration:none;border:1.5px solid var(--ink)}
+.btn.primary{background:var(--ink);color:var(--lime)}
+.btn:hover{transform:translateY(-1px)}
+
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:48px}
+.stat{background:var(--card);border:1.5px solid var(--line);border-radius:20px;padding:22px 22px 20px}
+.stat b{display:block;font:700 clamp(34px,4.5vw,48px)/1 'Space Grotesk',sans-serif;letter-spacing:-.03em}
+.stat span{display:block;margin-top:10px;font-size:14.5px;color:var(--grey);line-height:1.4}
+.stat.ink{background:var(--ink);border-color:var(--ink);color:#F4F1EA}
+.stat.ink b{color:var(--lime)}
+.stat.ink span{color:#B9BEC7}
+
+.grid{display:grid;gap:14px;margin-top:36px}
+.g2{grid-template-columns:repeat(2,1fr)}
+.g3{grid-template-columns:repeat(3,1fr)}
+.card{background:var(--card);border:1.5px solid var(--line);border-radius:20px;padding:24px}
+.dark .card{background:var(--ink2);border-color:#232A35}
+.card .lab{font:600 11.5px 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--grey)}
+.dark .card .lab{color:var(--mute)}
+.card h3{margin-top:8px}
+.card p{margin-top:8px;font-size:15.5px;color:#4A473F}
+.dark .card p{color:#B9BEC7}
+.card .res{margin-top:14px;padding-top:12px;border-top:1px dashed var(--line);font-size:15px}
+.dark .card .res{border-color:#2A323E}
+.card .res strong{font-family:'Space Grotesk',sans-serif;font-size:17px}
+.card .guard{margin-top:8px;font:500 12.5px 'JetBrains Mono',monospace;color:var(--green)}
+.dark .card .guard{color:var(--lime)}
+
+figure{margin-top:36px;border-radius:20px;overflow:hidden;border:1.5px solid var(--line);background:#fff}
+.dark figure{border-color:#232A35;background:var(--ink2)}
+figcaption{padding:12px 18px;font:500 12.5px 'JetBrains Mono',monospace;color:var(--grey);border-top:1px solid var(--line);background:var(--card)}
+.dark figcaption{background:var(--ink2);border-color:#232A35;color:var(--mute)}
+
+/* system map */
+.map{margin-top:36px;border-top:1.5px solid var(--line)}
+.row{display:grid;grid-template-columns:200px 1fr 1fr 180px;gap:16px;align-items:center;padding:20px 0;border-bottom:1.5px solid var(--line)}
+.row .dom{font:600 19px 'Space Grotesk',sans-serif}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{display:inline-block;padding:5px 10px;border-radius:8px;font:500 13px Inter,sans-serif;border:1.5px solid var(--line);background:#fff}
+.chip.ag{background:var(--ink);color:var(--lime);border-color:var(--ink);font-weight:600}
+.chip.who{background:#E9E4D7;border-color:#E9E4D7}
+.maphead{display:grid;grid-template-columns:200px 1fr 1fr 180px;gap:16px;padding:10px 0;font:600 11.5px 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--grey)}
+
+ul.ticks{list-style:none;margin-top:28px;display:grid;gap:12px}
+ul.ticks li{position:relative;padding-left:30px;font-size:16.5px}
+ul.ticks li:before{content:"";position:absolute;left:0;top:6px;width:16px;height:16px;border-radius:5px;background:var(--lime);box-shadow:inset 0 0 0 1.5px var(--ink)}
+ul.ticks b{font-family:'Space Grotesk',sans-serif}
+
+/* anatomy */
+.flow{display:grid;grid-template-columns:1fr 1fr 1.3fr 1.1fr;gap:12px;margin-top:36px;align-items:stretch}
+.flow .step{border-radius:18px;padding:20px;background:var(--ink2);border:1.5px solid #232A35}
+.flow .step.harness{border:1.5px dashed var(--lime);background:transparent}
+.flow .step ol{list-style:none;display:grid;gap:8px;margin-top:12px;counter-reset:c}
+.flow .step ol li{counter-increment:c;display:flex;gap:10px;align-items:center;background:var(--ink2);border-radius:10px;padding:8px 10px;font-size:14.5px}
+.flow .step ol li:before{content:counter(c);flex:none;width:22px;height:22px;border-radius:50%;background:var(--lime);color:var(--ink);font:700 12px Inter;display:grid;place-items:center}
+.outcome{display:grid;gap:12px}
+.outcome div{border-radius:18px;padding:16px 18px;font-size:14.5px}
+.ok{background:#16251C;border:1.5px solid #24402E}
+.ok b{color:var(--lime)}
+.no{background:#2A1712;border:1.5px solid #4A2519}
+.no b{color:#FF8A6B}
+.loop{margin-top:12px;border-radius:18px;padding:18px 20px;background:var(--lime);color:var(--ink);display:flex;flex-wrap:wrap;gap:10px 22px;align-items:center;font-size:14.5px;font-weight:500}
+.loop .lab{font:700 12px 'JetBrains Mono',monospace;letter-spacing:.12em}
+
+/* gates */
+.gates{counter-reset:g;list-style:none;display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:20px}
+.gates li{counter-increment:g;display:flex;gap:12px;background:var(--ink2);border:1.5px solid #232A35;border-radius:14px;padding:12px 14px;font-size:14.5px;color:#D4D7DC}
+.gates li:before{content:counter(g);flex:none;font:700 20px 'Space Grotesk';color:var(--lime);width:18px}
+.gates li b{color:#fff}
+
+/* bars */
+.bars{display:flex;align-items:flex-end;gap:12px;height:240px;margin-top:24px;padding:0 4px;border-bottom:1.5px solid #2A323E;position:relative}
+.bar{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%}
+.bar i{display:block;width:100%;border-radius:10px 10px 0 0;background:#5C6370}
+.bar.on i{background:var(--lime)}
+.bar em{font:700 18px 'Space Grotesk';font-style:normal;margin-bottom:6px}
+.bar em small{display:block;font:500 11px 'JetBrains Mono';color:var(--mute);text-align:center}
+.barlabels{display:flex;gap:12px;padding:8px 4px 0}
+.barlabels span{flex:1;text-align:center;font:500 12px 'JetBrains Mono';color:var(--mute)}
+.cut{position:absolute;left:40%;top:0;bottom:0;border-left:1.5px dashed var(--lime)}
+.cutnote{margin-top:12px;padding-left:14px;border-left:1.5px dashed var(--lime);font:500 12.5px 'JetBrains Mono',monospace;color:var(--lime)}
+
+.repos{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.repos .chip{font-family:'JetBrains Mono',monospace;font-size:12.5px}
+.repos a.chip{background:var(--lime);border-color:var(--ink);text-decoration:none;font-weight:600}
+
+/* timeline */
+.tl{margin-top:36px;display:grid;gap:0;border-top:1.5px solid var(--line)}
+.tl .job{display:grid;grid-template-columns:190px 1fr;gap:20px;padding:22px 0;border-bottom:1.5px solid var(--line)}
+.tl .when{font:500 13px 'JetBrains Mono',monospace;color:var(--grey);padding-top:3px}
+.tl h3{font-size:20px}
+.tl .co{color:var(--grey);font-size:15px;margin-top:2px}
+.tl ul{margin:10px 0 0 18px;font-size:15.5px;display:grid;gap:4px}
+
+/* case studies */
+.cases{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:36px}
+.case{background:var(--ink2);border:1.5px solid #232A35;border-radius:20px;padding:24px;display:flex;flex-direction:column}
+.case .lab{font:600 11.5px 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
+.case h3{margin-top:8px;color:#fff}
+.case dl{margin-top:16px;display:grid;gap:12px;flex:1}
+.case dt{font:600 11px 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--lime)}
+.case dd{font-size:15px;color:#C9CDD3;margin-top:2px}
+.case dd b{color:#fff;font-family:'Space Grotesk',sans-serif;font-size:16.5px}
+.case .impact{background:#1D2530;border-radius:12px;padding:12px 14px}
+.case .guard{margin-top:14px;font:500 12.5px 'JetBrains Mono',monospace;color:var(--lime)}
+@media (max-width:620px){.cases{grid-template-columns:1fr}}
+
+footer{padding:72px 0 56px;background:var(--ink);color:#F4F1EA}
+footer .note{margin-top:36px;font:500 12px 'JetBrains Mono',monospace;color:var(--mute);line-height:1.7}
+
+@media (max-width:900px){
+  .stats,.g3{grid-template-columns:repeat(2,1fr)}
+  .flow{grid-template-columns:1fr 1fr}
+  .row,.maphead{grid-template-columns:1fr}
+  .maphead{display:none}
+  .row{gap:10px}
+}
+@media (max-width:620px){
+  section{padding:64px 0}
+  .wrap{padding:0 16px}
+  .stats,.g2,.g3,.flow,.gates{grid-template-columns:1fr}
+  .tl .job{grid-template-columns:1fr;gap:6px}
+  nav ul{gap:14px}
+  nav .me{display:none}
+  .bars{height:200px;gap:8px}
+  .barlabels{gap:8px}
+}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap">
+  <a class="me" href="#top">Clément Dion</a>
+  <ul>
+    <li><a href="#impact">Impact</a></li>
+    <li><a href="#built">Built</a></li>
+    <li><a href="#business">Business</a></li>
+    <li><a href="#quality">Quality</a></li>
+    <li><a href="#people">People</a></li>
+    <li><a href="#experience">Experience</a></li>
+  </ul>
+</div></nav>
+
+<header class="hero" id="top"><div class="wrap">
+  <span class="pill">AI operations portfolio</span>
+  <h1>I build the AI systems an operation <em>runs on</em>, and the guardrails that make teams trust them.</h1>
+  <p class="lede">Global Head of Customer Operations at Kolet (travel eSIM), founding team. I design, build and run the AI agents and automations used daily by Care, Sales, Marketing and Tech. 12 years in customer operations at Apple, Back Market, Alan and Kolet.</p>
+  <div class="ctas">
+    <a class="btn primary" href="mailto:clement.dion@gmail.com">clement.dion@gmail.com</a>
+    <a class="btn" href="https://www.linkedin.com/in/clem-d-a167aba5" target="_blank" rel="noopener">LinkedIn</a>
+    <a class="btn" href="https://github.com/clementdion-tech" target="_blank" rel="noopener">GitHub</a>
+  </div>
+
+  <div class="stats">
+    <div class="stat ink"><b>63%</b><span>of conversations closed by a workflow or Fin AI, Jan–Oct 2026</span></div>
+    <div class="stat"><b>28×</b><span>conversations, 350 → 10,000 a month (2024 → 2026), while human-handled work grew 5% in the last year</span></div>
+    <div class="stat"><b>−30%</b><span>care cost per paid order, Q1 → Q3 2026</span></div>
+    <div class="stat"><b>17+</b><span>AI agents and internal tools in daily use across Care, Sales, Marketing and Tech</span></div>
+    <div class="stat"><b>19</b><span>repositories built and run end to end, by a customer operations leader</span></div>
+    <div class="stat ink"><b>97%</b><span>CSAT, up from 86% and held through the scale-up</span></div>
+  </div>
+</div></header>
+
+<section id="impact" class="dark"><div class="wrap">
+  <span class="pill">01 · In daily use</span>
+  <h2>Volume climbed 28×. Human load stayed flat.</h2>
+  <p class="lede">Growth went to automation, not hires. Every system below runs in production and is used every day.</p>
+
+  <figure><img src="assets/scale.jpg" alt="Monthly conversations, all versus handled by a human agent, July 2024 to September 2026: total volume rises 28 times while human-handled volume flattens" loading="lazy"><figcaption>Monthly conversations, all vs handled by a human · absolute values hidden on purpose</figcaption></figure>
+
+  <div class="grid g3">
+    <div class="card"><div class="lab">Absorbed growth</div><h3>+39% tickets, no extra hire</h3><p>June to August 2026, without the hire planned for the summer. First reply time −36% over the same period.</p></div>
+    <div class="card"><div class="lab">Unit cost</div><h3>−24% in one quarter</h3><p>Care cost per paid order, Q2 → Q3 2026, while paid orders grew 49%. Per conversation, the strictest view: −12%.</p></div>
+    <div class="card"><div class="lab">Running cost</div><h3>~$0 a month</h3><p>For the in-house tools. Care cost = agent pay + Fin AI fees.</p></div>
+  </div>
+
+  <h3 style="margin-top:56px;color:#fff;font-size:26px">Case by case</h3>
+  <p class="lede" style="font-size:16.5px;margin-top:6px">Every system: where we started, the problem, the manual work it removed, and what the data shows.</p>
+  <div class="cases">
+
+    <div class="case"><div class="lab">Customer service · automation</div><h3>Workflows + Fin AI</h3><dl>
+      <dt>Before</dt><dd>In 2024, chasing snoozed cases from unresponsive users could take up to <b>30%</b> of an agent's shift.</dd>
+      <dt>Problem</dt><dd>Conversation volume grew 28× in two years (Q3 2024 → Q3 2026).</dd>
+      <dt>Manual work removed</dt><dd>The redesigned unresponsive-user workflow reactivated <b>562 users</b> in December 2024 alone. In 2026, <b>+39% tickets</b> were absorbed June–August without the hire planned for the summer.</dd>
+      <dt>Impact</dt><dd class="impact"><b>63%</b> of conversations closed by a workflow or Fin AI (Jan–Oct 2026) · human-handled work <b>+5%</b> in a year · first reply <b>−36%</b> · care cost per paid order <b>−24%</b> in one quarter</dd>
+    </dl><div class="guard">Fin AI retrained daily: 100 updates in one month, with an agent feedback sheet on its accuracy</div></div>
+
+    <div class="case"><div class="lab">Customer service · every 5 seconds</div><h3>P1 routing engine</h3><dl>
+      <dt>Before</dt><dd>Agents picked tickets manually.</dd>
+      <dt>Problem</dt><dd>Workload was uneven across agents, and tickets stayed with agents who had gone off shift.</dd>
+      <dt>Manual work removed</dt><dd>No more manual picking: <b>96%</b> of P1s are now assigned automatically to the agent who is seated, on shift and least loaded.</dd>
+      <dt>Impact</dt><dd class="impact"><b>68 s</b> median P1 first reply · assignment accuracy <b>80% → 96%</b> in one week, tuned with the agents through a <b>152-reply</b> feedback thread</dd>
+    </dl><div class="guard">Deterministic rules, no AI · humans win on continuity · 28 non-regression tests</div></div>
+
+    <div class="case"><div class="lab">Customer service · in the inbox</div><h3>Five apps in the agent sidebar</h3><dl>
+      <dt>Before</dt><dd>For a price, agents left Intercom, searched kolet.com, then copied and reformatted it. Coverage meant opening the admin tool and pasting zone data. Identity checks ran through a side conversation and a template, then waiting for a reply.</dd>
+      <dt>Problem</dt><dd>Slow and error-prone, and new agents did not know where to look. Notion search made help articles hard to find, which slowed their ramp-up.</dd>
+      <dt>Manual work removed</dt><dd>Price lookup <b>1–2 min → ~5 s</b> per pricing question, with the note written in the customer's language. Identity proven in one click by magic link; the conversation reopens by itself once verified.</dd>
+      <dt>Impact</dt><dd class="impact">Network coverage for <b>242</b> territories in one click · identity check built in <b>4 days</b> · knowledge search learns from agent votes · <b>~$0</b> a month to run</dd>
+    </dl></div>
+
+    <div class="case"><div class="lab">Product · conversation analysis</div><h3>Contact rate cut in half</h3><dl>
+      <dt>Before</dt><dd>Contact rate peaked at <b>13%</b> of monthly active users in 2025.</dd>
+      <dt>Problem</dt><dd>Tags hid the real reasons: 31% of conversations were menu taps with no typed text. In July 2025, 1,071 of 5,376 contacts (about 20%) could be removed by a product fix.</dd>
+      <dt>Manual work removed</dt><dd>9,000 conversations read in full by AI to set Product's priorities, instead of sampling tags.</dd>
+      <dt>Impact</dt><dd class="impact">Contact rate halved, <b>13% → 6.7%</b>, while users grew 3.6× · in-app eSIM migration cut device-change requests <b>41% → 32%</b></dd>
+    </dl></div>
+
+    <div class="case"><div class="lab">Product &amp; Tech · every preview</div><h3>Release QA agent</h3><dl>
+      <dt>Before</dt><dd>Every week, developers posted previews in the QA channel: <b>327</b> posts and <b>2,973</b> replies between May 2025 and September 2026.</dd>
+      <dt>Problem</dt><dd>Testing a preview takes devices, test accounts and every supported language, and feedback quality varied.</dd>
+      <dt>Manual work removed</dt><dd>The agent runs the first complete pass on iOS, Android and web, in every language, with a screenshot per verdict. A human only types the login code, in 10 seconds.</dd>
+      <dt>Impact</dt><dd class="impact"><b>17</b> defects reported · required checks applied <b>6/16 → 17/21</b> · caught a price rule broken in one currency, 3 translation meaning bugs and a QR link set to die</dd>
+    </dl><div class="guard">7 gates · second-agent confirmation · staging and test accounts only</div></div>
+
+    <div class="case"><div class="lab">Payments · agent + Stripe rules</div><h3>Fraud &amp; disputes</h3><dl>
+      <dt>Before</dt><dd>Each chargeback dispute needed a manual investigation by the care and fraud side before answering Stripe.</dd>
+      <dt>Problem</dt><dd><b>131</b> disputes from June 2024 to August 2026, two-thirds of them flagged as fraud.</dd>
+      <dt>Manual work removed</dt><dd>The agent investigates each dispute daily across Stripe, the warehouse, support history, in-app activity and activation traces, then posts a case file with a ready-to-send message. A separate fraud sweep, requested by the COO, screened <b>25,565</b> Stripe charges in one run.</dd>
+      <dt>Impact</dt><dd class="impact">Payment dispute rate <b>cut by two-thirds</b> · a device shared between accounts predicts <b>22–123×</b> more disputes · <b>1,712</b> fake Android devices found behind 1,851 diverted gifts · Stripe rules blocked all <b>1,536</b> attempts of one carding bot</dd>
+    </dl><div class="guard">0 Stripe actions without a human · 26 eval cases · prediction recorded before the outcome</div></div>
+
+    <div class="case"><div class="lab">Tech &amp; founders · on demand</div><h3>Business-rules audit agent</h3><dl>
+      <dt>Before</dt><dd>The same rule could give different answers in different places: the Koins conversion minimum had "four places, four answers".</dd>
+      <dt>Problem</dt><dd>Every business rule had to be checked against what the API and app code actually do, and edge cases surfaced for the founders.</dd>
+      <dt>Manual work removed</dt><dd>The agent and its sub-agents read the code domain by domain and write one card per rule. Reviewers only judge the cards.</dd>
+      <dt>Impact</dt><dd class="impact"><b>199</b> rules challenged in the first audit (15 Sep 2026) · <b>5</b> became live fixes within days, e.g. the Koins minimum fixed in the app in 1 day and an identity check that "never expires" fixed in the API in 2 days</dd>
+    </dl><div class="guard">Read-only on product · 11 of the first 44 cards judged wrong, each turned into a rule and an eval</div></div>
+
+    <div class="case"><div class="lab">Care × Tech · every hour</div><h3>Escalation triage agent</h3><dl>
+      <dt>Before</dt><dd>In 2025, Care agents pinged Tech ad hoc about product bugs. A first escalation process handled 41 escalations, 23 linked to real product issues.</dd>
+      <dt>Problem</dt><dd>Writing up each escalated case for Tech was still a manual step for Care agents.</dd>
+      <dt>Manual work removed</dt><dd>No manual action left for the care team: the agent analyses and documents each escalated card, re-verifies it with fresh data and closes it when the fix ships.</dd>
+      <dt>Impact</dt><dd class="impact"><b>87%</b> of the <b>273</b> escalations tracked by the agent are resolved</dd>
+    </dl><div class="guard">Only a human tag triggers work · every figure carries an evidence grade · card creation blocked by config</div></div>
+
+    <div class="case"><div class="lab">Care · since April 2026</div><h3>NPS reply &amp; diagnosis</h3><dl>
+      <dt>Before</dt><dd>Agents found low-NPS customers by hand and emailed them: <b>25%</b> replied to the first email, <b>10%</b> to the second.</dd>
+      <dt>Problem</dt><dd>Many detractors went unanswered, and finding why a customer scored low meant rebuilding their journey across eight stages.</dd>
+      <dt>Manual work removed</dt><dd><b>~2 h a day</b> of manual emails, as stated by the team: every customer scoring below 7 now gets a personalised email automatically.</dd>
+      <dt>Impact</dt><dd class="impact">NPS <b>30 → 59.5</b> from May to August 2026 · the diagnosis agent locates each detractor's blocker in PostHog and flags rage-click screens</dd>
+    </dl><div class="guard">9 QA gate checks · inferences labelled · no personal data in the repo</div></div>
+
+  </div>
+
+  <div class="grid g2" style="margin-top:16px">
+    <div class="card"><div class="lab">Also running</div><h3>Monitors and planning</h3><p>Competitor price watch (4,859 plans, 222 countries, weekly) · daily catalogue coverage monitor (35 smoke checks) · workforce planning engine (Erlang C, 15-minute intervals, 59 tests) · automatic work log (494 dated entries from Slack and Gmail).</p></div>
+    <div class="card"><div class="lab">Beyond Care</div><h3>Agents for Sales, Marketing and the COO</h3><p>Sales prospect lists (9 airlines, 4 hotel groups profiled) · a B2B lead-qualification agent with fields defined by Sales · an e-reputation agent for Marketing · a fraud sweep requested by the COO.</p></div>
+  </div>
+
+<figure><img src="assets/handler.jpg" alt="Live dashboard: conversations by handler in 2026, team versus workflow versus Fin AI" loading="lazy"><figcaption>Metabase · conversations by handler: team, workflow, Fin AI · 2026 · values blurred on purpose</figcaption></figure>
+</div></section>
+
+<section id="built"><div class="wrap">
+  <span class="pill">02 · Built by hand</span>
+  <h2>I write the code, ship it and run it.</h2>
+  <p class="lede">19 repositories, 18 of them private because they hold company data. One is public: the smart knowledge search that runs in the agents' inbox.</p>
+
+  <figure><img src="assets/inbox-tools.jpg" alt="Inbox apps: smart knowledge search with suggested articles and votes, and a pricing lookup showing plans in euros" loading="lazy"><figcaption>Intercom Canvas Kit · Node.js on Render · ≈ $0 a month</figcaption></figure>
+
+  <figure><img src="assets/p1-routing.jpg" alt="Case study: P1 routing, from detecting unassigned conversations to picking the least loaded agent on shift" loading="lazy"><figcaption>Case study · P1 routing · Node.js · Intercom + Assembled APIs · automated tests</figcaption></figure>
+
+  <h3 style="margin-top:44px">Repositories</h3>
+  <div class="repos">
+    <a class="chip" href="https://github.com/clementdion-tech/kolet-hc-app" target="_blank" rel="noopener">kolet-hc-app ↗ public</a>
+    <span class="chip">kolet-qa-agent</span><span class="chip">kolet-assigner</span><span class="chip">Stripe-dispute-manager</span><span class="chip">kolet-audit-knowledge</span><span class="chip">Tech-and-care-backlog-automation</span><span class="chip">NPS-feedback-analysis</span><span class="chip">kolet-pricing-app</span><span class="chip">kolet-coverage-app</span><span class="chip">kolet-connectivity-assistant</span><span class="chip">kolet-identity-verify</span><span class="chip">esim-price-tracker</span><span class="chip">kolet-coverage-monitor</span><span class="chip">kolet-wfm-saas</span><span class="chip">clem-work-log</span><span class="chip">cro-agent-template</span><span class="chip">+ 3 more</span>
+  </div>
+  <div class="repos">
+    <span class="chip who">Claude Code</span><span class="chip who">Node.js</span><span class="chip who">TypeScript</span><span class="chip who">Python</span><span class="chip who">BigQuery</span><span class="chip who">Metabase</span><span class="chip who">PostHog</span><span class="chip who">Intercom + Fin AI</span><span class="chip who">Assembled</span><span class="chip who">Notion</span>
+  </div>
+</div></section>
+
+<section id="business" style="background:var(--card)"><div class="wrap">
+  <span class="pill">03 · Across the business</span>
+  <h2>Not a support tool. The whole operation, tooled by domain.</h2>
+  <p class="lede">I own Care, app &amp; web QA, network quality, fraud &amp; payments and partner operations. The agents follow the same scope.</p>
+
+  <div class="map">
+    <div class="maphead"><span>Domain</span><span>Sources read</span><span>Agents &amp; apps</span><span>For whom</span></div>
+    <div class="row"><div class="dom">Fraud &amp; payments</div><div class="chips"><span class="chip">Stripe</span><span class="chip">Slack alerts</span><span class="chip">BigQuery</span></div><div class="chips"><span class="chip ag">Fraud &amp; disputes agent</span></div><div class="chips"><span class="chip who">Payment ops</span><span class="chip who">Finance</span></div></div>
+    <div class="row"><div class="dom">Product &amp; QA</div><div class="chips"><span class="chip">API &amp; app code</span><span class="chip">Figma</span><span class="chip">Slack previews</span><span class="chip">PostHog</span></div><div class="chips"><span class="chip ag">Release QA agent</span><span class="chip ag">Rules audit</span><span class="chip ag">NPS diagnosis</span></div><div class="chips"><span class="chip who">Product &amp; Tech</span><span class="chip who">Founders</span></div></div>
+    <div class="row"><div class="dom">Customer service</div><div class="chips"><span class="chip">Intercom</span><span class="chip">Notion KB</span><span class="chip">Assembled</span><span class="chip">Pricing API</span></div><div class="chips"><span class="chip ag">Ticket assignment</span><span class="chip ag">5 apps in the inbox</span><span class="chip ag">Care × Tech triage</span></div><div class="chips"><span class="chip who">Care agents</span><span class="chip who">Tech</span></div></div>
+    <div class="row"><div class="dom">Catalogue &amp; pricing</div><div class="chips"><span class="chip">Catalogue API</span><span class="chip">Operator zones</span><span class="chip">Competitor sites</span></div><div class="chips"><span class="chip ag">Price watch</span><span class="chip ag">Catalogue monitor</span></div><div class="chips"><span class="chip who">Pricing</span><span class="chip who">Partners</span></div></div>
+    <div class="row"><div class="dom">Management</div><div class="chips"><span class="chip">Slack</span><span class="chip">Gmail</span><span class="chip">Intercom volumes</span></div><div class="chips"><span class="chip ag">Work log</span><span class="chip ag">WFM SaaS</span></div><div class="chips"><span class="chip who">Leadership</span><span class="chip who">Annual reviews</span></div></div>
+  </div>
+
+  <ul class="ticks">
+    <li><b>Product.</b> AI analysis of 9,000 conversations set the product-fix priorities: contact rate halved, 13% → 6.7%, while users grew 3.6×. In-app eSIM migration cut device-change requests from 41% to 32%.</li>
+    <li><b>Tech.</b> A business-rules audit agent reads the API and app code: 199 rules challenged, 5 became live fixes within days.</li>
+    <li><b>Partners &amp; revenue.</b> 18.7k users tried to pay with Air France-KLM or Etihad miles in 2026, and only 52% succeeded. I found the two causes on the partners' side (an Etihad login loop and an AF/KLM dead end hitting 150 to 220 users a month) and fixed the 20% of missing tracking events before concluding.</li>
+    <li><b>Finance.</b> A credit-conversion loss reported at several million euros, brought back to a few thousand euros of real leakage, broken down by cause (÷250). 13 software invoices reconciled to the cent before renewal; a 24-month offer shown to be 4× oversized. Cost per ticket now updates live from agent invoices to BigQuery and Metabase, with no manual entry.</li>
+    <li><b>Legal.</b> Terms of sale audited against 2026 consumer law (withdrawal button, AI Act); 11 clauses rewritten.</li>
+    <li><b>Exec reporting.</b> A contact-rate KPI, a live cost-to-serve model and a Care section in the monthly investor reports.</li>
+    <li><b>Commercial.</b> Took airline, travel and corporate partners live, including Air France-KLM. New payment methods now bring 11% of revenue.</li>
+  </ul>
+</div></section>
+
+<section id="quality" class="dark"><div class="wrap">
+  <span class="pill">04 · Quality bar</span>
+  <h2>The LLM decides what matters. The harness decides what it can write.</h2>
+  <p class="lede">Every agent follows the same design: read-only by default, deterministic guard hooks, knowledge and evals versioned in GitHub, and a human approves the action.</p>
+
+  <div class="flow">
+    <div class="step"><div class="lab mono" style="color:var(--lime);font-size:11.5px;letter-spacing:.12em">TRIGGER</div><p style="margin-top:10px;font-size:14.5px;color:#B9BEC7">Scheduled routine, Slack mention or a "QA this" command.</p></div>
+    <div class="step"><div class="lab mono" style="color:var(--lime);font-size:11.5px;letter-spacing:.12em">AGENT</div><p style="margin-top:10px;font-size:14.5px;color:#B9BEC7">Reads its rules, playbooks and knowledge from Git, then queries systems read-only.</p></div>
+    <div class="step harness"><div class="lab mono" style="color:var(--lime);font-size:11.5px;letter-spacing:.12em">HARNESS · EVERY TOOL CALL</div><ol><li>Tool on the allowlist?</li><li>Write cap respected?</li><li>Already done? (dedup ledger)</li><li>Sensitive data or locked field?</li></ol></div>
+    <div class="outcome"><div class="ok"><b>✓ Write allowed</b><br>Notion card, Slack message or pull request, recorded in the audit log.</div><div class="no"><b>✕ Blocked</b><br>Denied by default and logged; the run continues without the write.</div></div>
+  </div>
+  <div class="loop"><span class="lab">LEARNING LOOP</span><span>1 · A human reviews the result</span><span>2 · A "wrong" verdict is logged as a case</span><span>3 · The case becomes a rule</span><span>4 · An eval replays it</span><span>5 · The repo is updated for the next run</span></div>
+
+  <div class="grid g2" style="margin-top:48px">
+    <div>
+      <h3>Seven gates before any finding reaches a human</h3>
+      <p class="lede" style="font-size:16px;margin-top:8px">Release QA agent. Each candidate issue passes all seven, or is dropped and kept in the run file.</p>
+      <ol class="gates">
+        <li><span><b>In scope?</b> It must break a sentence of the request.</span></li>
+        <li><span><b>Reproduced 2 of 2?</b> From a fresh start.</span></li>
+        <li><span><b>Not the agent's own mistake?</b> Early screenshot, missed tap, stale cache.</span></li>
+        <li><span><b>Not a known test-environment limit?</b></span></li>
+        <li><span><b>New in this preview?</b> If production does it too, it is dropped.</span></li>
+        <li><span><b>Not intended?</b> Checked in the thread, the design and the code.</span></li>
+        <li><span><b>Confirmed by a second agent?</b> Fresh context, sees only the post and the steps.</span></li>
+      </ol>
+    </div>
+    <div>
+      <h3>Measured on every run</h3>
+      <p class="lede" style="font-size:16px;margin-top:8px">Checks applied ÷ checks the knowledge required. Hits, false positives and, above all, escapes.</p>
+      <div class="bars">
+        <div class="cut"></div>
+        <div class="bar"><em>6/16<small>38%</small></em><i style="height:38%"></i></div>
+        <div class="bar"><em>9/19<small>47%</small></em><i style="height:47%"></i></div>
+        <div class="bar on"><em>14/16<small>88%</small></em><i style="height:88%"></i></div>
+        <div class="bar on"><em>15/19<small>79%</small></em><i style="height:79%"></i></div>
+        <div class="bar on"><em>17/21<small>81%</small></em><i style="height:81%"></i></div>
+      </div>
+      <div class="barlabels"><span>Run A</span><span>Run B</span><span>Run C</span><span>Run D</span><span>Run E</span></div>
+      <p class="cutnote">From run C, a script derives the required checks and CI blocks any run that skips one.</p>
+      <div class="grid" style="margin-top:20px">
+        <div class="card"><div class="lab">Escapes: the number that matters most</div><p>First measured run: 3 of 4 issues raised by the product team were missed. Each became a check.</p></div>
+        <div class="card"><div class="lab">Honest start</div><p>First run: 1 valid finding out of ~10. Small numbers, read as direction, not proof.</p></div>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<section id="people"><div class="wrap">
+  <span class="pill">05 · Bringing people along</span>
+  <h2>Bigger and better, every quarter.</h2>
+  <p class="lede">The tools are built with the people who use them. Agents shape them in the open, and quality went up while the team scaled.</p>
+  <div class="stats">
+    <div class="stat"><b>152</b><span>replies in the open agent feedback thread on P1 routing; every fix ships with a regression test</span></div>
+    <div class="stat"><b>3 mo → 2 wks</b><span>agent onboarding time</span></div>
+    <div class="stat"><b>4 → 17</b><span>people across 6 countries, 24/7 from four hubs: Brazil, Colombia, Morocco, the Philippines</span></div>
+    <div class="stat"><b>88 → 96%</b><span>QA score, with 1,100+ audits a quarter, coaching and a team-leader layer</span></div>
+    <div class="stat"><b>13 → 1.2 min</b><span>median first reply, with up to 10,000 conversations a month</span></div>
+    <div class="stat ink"><b>86 → 97%</b><span>CSAT, Jul 2024 → Sep 2026</span></div>
+  </div>
+</div></section>
+
+<section id="experience" style="padding-top:0"><div class="wrap">
+  <span class="pill">06 · Experience</span>
+  <h2>12 years in operations.</h2>
+  <div class="tl">
+    <div class="job"><div class="when">Jun 2024 – now</div><div><h3>Kolet · founding team</h3><div class="co">Next-gen travel eSIM · remote</div><ul><li><b>Global Head of Customer Operations</b> (Jul 2025 – now): Care, app &amp; web QA, network quality, fraud &amp; payments, partner operations and AI automation. 17 people in 6 countries.</li><li><b>Customer Care Lead</b> (Aug 2024 – Jul 2025): built Care from scratch, scaled support 15× in one year, made it ready for the Air France-KLM launch.</li></ul></div></div>
+    <div class="job"><div class="when">May 2023 – Mar 2024</div><div><h3>Alan</h3><div class="co">Health insurance · User Care Expert &amp; Product Referent</div></div></div>
+    <div class="job"><div class="when">Feb 2021 – Feb 2023</div><div><h3>Back Market</h3><div class="co">Refurbished electronics marketplace · Lead Logistics Support</div><ul><li>Scaled logistics support across the US and Europe, team from 2 to 20; training, QA and BPO management. 120+ B2B seller accounts.</li></ul></div></div>
+    <div class="job"><div class="when">Jan 2014 – Jan 2021</div><div><h3>Apple</h3><div class="co">Cork, Ireland · Team Lead, Technical Support</div><ul><li>Led 20+ people on Tier 1 &amp; 2 support for iOS, macOS and iTunes across EMEIA and AMR: 93% CSAT.</li></ul></div></div>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <span class="pill">Contact</span>
+  <h2 style="color:#F4F1EA">Let's talk about the AI your operation could run on.</h2>
+  <div class="ctas">
+    <a class="btn primary" style="border-color:var(--lime)" href="mailto:clement.dion@gmail.com">clement.dion@gmail.com</a>
+    <a class="btn" style="border-color:#F4F1EA" href="https://www.linkedin.com/in/clem-d-a167aba5" target="_blank" rel="noopener">LinkedIn</a>
+    <a class="btn" style="border-color:#F4F1EA" href="https://github.com/clementdion-tech" target="_blank" rel="noopener">GitHub</a>
+  </div>
+  <p class="note">Figures come from internal dashboards (Intercom, Metabase, Stripe). Absolute values are hidden or blurred on purpose. Bordeaux, France · French native, English full professional.</p>
+</div></footer>
+
+</body>
+</html>
