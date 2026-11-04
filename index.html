@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>Clément Dion · AI Operations</title>
+<title>Clem Dion · AI Operations</title>
 <meta name="description" content="Volume up 28×, human workload flat. The AI agents, automations and guardrails behind it.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -204,7 +204,7 @@ footer .note{margin-top:64px;font-size:13px;color:#8A909A;max-width:780px}
 
 
 /* hero team grid */
-.teams{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:56px}
+.teams{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:56px}
 .team{background:var(--ink2);border:1px solid var(--dline);border-radius:18px;padding:20px;transition:border-color .2s,transform .2s}
 .team:hover{border-color:var(--lime);transform:translateY(-3px)}
 .team .who{font:600 11px 'JetBrains Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:var(--mute)}
@@ -351,17 +351,21 @@ footer .note{margin-top:64px;font-size:13px;color:#8A909A;max-width:780px}
   .dark{padding:72px 0;margin-top:80px}
   .job{grid-template-columns:1fr;gap:4px}
 }
+.more{margin-top:18px}
+.more summary{cursor:pointer;list-style:none;display:inline-block;font-size:14px;font-weight:600;color:var(--lime);border:1px solid var(--dline);border-radius:999px;padding:9px 16px}
+.more summary::-webkit-details-marker{display:none}
+.more summary::after{content:" ↓"}
+.more[open] summary::after{content:" ↑"}
 </style>
 </head>
 <body class="no-js">
 
 <nav><div class="wrap">
-  <a class="me" href="#top">Clément Dion<span>.</span></a>
+  <a class="me" href="#top">Clem Dion<span>.</span></a>
   <ul>
     <li><a href="#ai">Company-wide AI</a></li>
     <li><a href="#architecture">Architecture</a></li>
     <li><a href="#care">Customer Care</a></li>
-    <li><a href="#approach">First 90 days</a></li>
   </ul>
   <a class="cta" href="mailto:clement.dion@gmail.com">Let's talk</a>
 </div></nav>
@@ -369,7 +373,7 @@ footer .note{margin-top:64px;font-size:13px;color:#8A909A;max-width:780px}
 <header class="hero" id="top"><div class="wrap">
   <div class="kicker">AI Operations · Customer Operations</div>
   <h1>AI in every team.<br><span class="flat">Proof in every number.</span></h1>
-  <p class="sub">I'm <b>Clément Dion</b>, Global Head of Customer Operations at Kolet, a travel eSIM scale-up. I design and build the AI agents used daily by Care, Sales, Marketing and Tech, and the guardrails that make them safe to trust.</p>
+  <p class="sub">I'm <b>Clem Dion</b>, Global Head of Customer Operations at Kolet, a travel eSIM scale-up. I design and build the AI agents used daily by Care, Sales, Marketing and Tech, and the guardrails that make them safe to trust.</p>
   <div class="btns">
     <a class="btn lime" href="mailto:clement.dion@gmail.com">Email me</a>
     <a class="btn" href="#ai">See the impact ↓</a>
@@ -379,29 +383,16 @@ footer .note{margin-top:64px;font-size:13px;color:#8A909A;max-width:780px}
     <div class="team"><div class="who">Product</div><b>½</b><span>contact rate, after AI read 9,000 conversations to set priorities</span></div>
     <div class="team"><div class="who">Tech</div><b data-count="199">199</b><span>business rules checked in the code by an AI agent; 5 live fixes within days</span></div>
     <div class="team"><div class="who">Payments</div><b>÷3</b><span>payment dispute rate, cut by two-thirds</span></div>
-    <div class="team"><div class="who">Finance</div><b>÷250</b><span>a loss reported in the millions, traced to a few thousand of real leakage</span></div>
-    <div class="team"><div class="who">Product &amp; Tech</div><b data-count="17">17</b><span>defects caught before release by an AI QA agent</span></div>
     <div class="team"><div class="who">Customer Care</div><b data-count="63" data-suffix="%">63%</b><span>of conversations closed by a workflow or Fin AI, Jan–Oct 2026</span></div>
   </div>
-  <div class="badge"><b>17+</b>AI agents and tools in daily use · 19 repositories · built with Claude Code</div>
+  <div class="badge"><b>17+</b>AI agents and tools in daily use · built with Claude Code</div>
 </div></header>
-<section class="bring"><div class="wrap">
-  <div class="kicker">What I bring to an AI Operations role</div>
-  <div class="bgrid">
-    <a href="#care"><div class="n">01 · AI IN DAILY USE</div><b>Systems teams depend on, with the numbers</b><span>63% of conversations closed by automation; +39% tickets with no extra hire.</span><em>See Customer Care ↓</em></a>
-    <a href="#architecture"><div class="n">02 · HANDS-ON</div><b>I build what I propose</b><span>19 repositories built with Claude Code, from prototype to production.</span><em>See the architecture ↓</em></a>
-    <a href="#ai"><div class="n">03 · WHOLE BUSINESS</div><b>Beyond support</b><span>Product, Tech, Payments, Finance, Partners, Sales and Marketing.</span><em>See company-wide impact ↓</em></a>
-    <a href="#care"><div class="n">04 · SCALE-UP PACE</div><b>Built from zero, scaled 28×</b><span>Founding team; 350 → 10,000 conversations a month in two years.</span><em>See the growth ↓</em></a>
-    <a href="#care"><div class="n">05 · PEOPLE</div><b>Tools built with the teams</b><span>Routing tuned through 152 agent replies; tools used daily by Care, Sales, Marketing and Tech.</span><em>See how ↓</em></a>
-    <a href="#disputes-agent"><div class="n">06 · QUALITY BAR</div><b>Tested, monitored, guarded</b><span>Evals, human approval and guardrails, each with its reason.</span><em>See one agent in detail ↓</em></a>
-  </div>
-</div></section>
 
 
 <section class="part light" id="ai"><div class="wrap">
   <div class="partlabel rv"><i>1</i>Company-wide impact with AI</div>
   <h2 class="rv">Not a support bot. <em>AI across the whole company.</em></h2>
-  <p class="lede rv">Each system replaced work someone was doing by hand, in Product, Tech, Payments, Finance, Sales or Marketing. I designed it, built it, shipped it and measured it.</p>
+  <p class="lede rv">Each system replaced work someone was doing by hand, in Product, Tech and Payments. I designed it, built it, shipped it and measured it.</p>
 
   <div class="ba">
     <div class="bacard rv">
@@ -415,60 +406,20 @@ footer .note{margin-top:64px;font-size:13px;color:#8A909A;max-width:780px}
       <div class="after"><div class="lab">After</div><b data-count="5">5</b><span>live fixes within days, out of 199 rules checked</span></div>
     </div>
     <div class="bacard rv">
-      <div class="what"><div class="tag">Product &amp; Tech</div><h3>Every release tested before customers see it</h3><p>An AI agent tests each preview on iOS, Android and web, in every language, against the design, with a screenshot as proof.</p></div>
-      <div class="before"><div class="lab">Before</div><p>Developers posted previews with "let me know if you find anything".</p></div>
-      <div class="after"><div class="lab">After</div><b data-count="17">17</b><span>defects caught before release, including a price rule broken in one currency</span></div>
-    </div>
-    <div class="bacard rv">
       <div class="what"><div class="tag">Payments</div><h3>Disputes investigated automatically</h3><p>Stripe fraud rules, and an AI agent that builds each dispute's evidence file every day from five data sources. A human always makes the call.</p></div>
       <div class="before"><div class="lab">Before</div><p>Every chargeback needed a manual investigation before answering Stripe.</p></div>
       <div class="after"><div class="lab">After</div><b>÷3</b><span>payment dispute rate cut by two-thirds; all 1,536 attempts of one carding bot blocked</span><a class="howlink" href="#disputes-agent">See how the agent works ↓</a></div>
     </div>
-    <div class="bacard rv">
-      <div class="what"><div class="tag">Care × Tech</div><h3>Bugs reach Tech already documented</h3><p>An AI agent documents each escalation, re-checks it every hour with fresh data and closes it when the fix ships.</p></div>
-      <div class="before"><div class="lab">Before</div><p>Care agents wrote up every escalated bug for Tech by hand.</p></div>
-      <div class="after"><div class="lab">After</div><b data-count="87" data-suffix="%">87%</b><span>of the 273 escalations it tracked are resolved</span></div>
-    </div>
   </div>
 
-  <div class="domains">
-    <div class="rv"><div class="big">52%</div><h4>Partners</h4><p>Of 18.7k customers paying with airline miles, only 52% succeeded. I found the two causes on the partners' side.</p></div>
-    <div class="rv"><div class="big">÷250</div><h4>Finance</h4><p>A loss reported at several million euros, traced back to a few thousand of real leakage, broken down by cause.</p></div>
-    <div class="rv"><div class="big">13</div><h4>Sales &amp; Marketing</h4><p>Prospects profiled (9 airlines, 4 hotel groups), plus a B2B lead-qualification agent and an e-reputation agent.</p></div>
-  </div>
-
-  <div class="block">
-    <div class="kicker rv">System map</div>
-    <h3 class="t rv">The whole operation, tooled by domain.</h3>
-    <div class="map">
-      <div class="mhead"><span>Domain</span><span>Reads</span><span></span><span>Agents &amp; apps</span><span>For</span></div>
-      <div class="mrow rv"><div class="dom">Fraud &amp; payments</div><div class="chips"><span class="chip">Stripe</span><span class="chip">Slack alerts</span><span class="chip">BigQuery</span></div><div class="arr">→</div><div class="chips"><span class="chip ai">Fraud &amp; disputes agent</span></div><div class="chips"><span class="chip who">Payment ops</span><span class="chip who">Finance</span></div></div>
-      <div class="mrow rv"><div class="dom">Product &amp; QA</div><div class="chips"><span class="chip">App &amp; API code</span><span class="chip">Figma</span><span class="chip">PostHog</span></div><div class="arr">→</div><div class="chips"><span class="chip ai">Release QA</span><span class="chip ai">Rules audit</span><span class="chip ai">NPS diagnosis</span></div><div class="chips"><span class="chip who">Product &amp; Tech</span><span class="chip who">Founders</span></div></div>
-      <div class="mrow rv"><div class="dom">Customer service</div><div class="chips"><span class="chip">Intercom</span><span class="chip">Notion</span><span class="chip">Pricing API</span></div><div class="arr">→</div><div class="chips"><span class="chip ai">Ticket routing</span><span class="chip ai">5 inbox apps</span><span class="chip ai">Care × Tech triage</span></div><div class="chips"><span class="chip who">Care agents</span><span class="chip who">Tech</span></div></div>
-      <div class="mrow rv"><div class="dom">Catalogue &amp; pricing</div><div class="chips"><span class="chip">Catalogue</span><span class="chip">Operator zones</span><span class="chip">Competitor sites</span></div><div class="arr">→</div><div class="chips"><span class="chip ai">Price watch</span><span class="chip ai">Catalogue monitor</span></div><div class="chips"><span class="chip who">Pricing</span><span class="chip who">Partners</span></div></div>
-      <div class="mrow rv"><div class="dom">Management</div><div class="chips"><span class="chip">Slack</span><span class="chip">Gmail</span><span class="chip">Volumes</span></div><div class="arr">→</div><div class="chips"><span class="chip ai">Work log</span><span class="chip ai">Workforce planning</span></div><div class="chips"><span class="chip who">Leadership</span></div></div>
-    </div>
-  </div>
 </div></section>
 
 <section class="dark" id="architecture"><div class="wrap">
   <div class="kicker rv">Architecture</div>
-  <h2 class="rv">Six layers. <span>Each one has a single job.</span></h2>
+  <h2 class="rv">Nothing reaches a team <span>without passing the harness.</span></h2>
   <p class="lede rv">Agents meet teams where they already work, read data without touching it, and can only write through rules enforced in code.</p>
 
-  <div class="stack">
-    <div class="layer rv"><div class="n">01</div><h4>Interfaces<small>Where teams already work</small></h4><div class="chips"><span class="chip">Slack</span><span class="chip">Intercom inbox</span><span class="chip">Notion boards</span><span class="chip">Metabase dashboards</span></div></div>
-    <div class="layer rv"><div class="n">02</div><h4>Agents &amp; apps<small>The business value</small></h4><div class="chips"><span class="chip ai">Fraud &amp; disputes</span><span class="chip ai">Release QA</span><span class="chip ai">Rules audit</span><span class="chip ai">Care × Tech triage</span><span class="chip ai">NPS diagnosis</span><span class="chip app">Ticket routing</span><span class="chip app">Price lookup</span><span class="chip app">Network coverage</span><span class="chip app">Identity check</span><span class="chip app">Knowledge search</span><span class="chip app">Price watch</span><span class="chip app">Workforce planning</span></div></div>
-    <div class="layer gov rv"><div class="n">03</div><h4>Governance<small>What an agent may do</small></h4><div class="chips"><span class="chip">Deny by default</span><span class="chip">Write caps per run</span><span class="chip">No duplicate actions</span><span class="chip">Audit log</span><span class="chip">Shadow mode first</span></div></div>
-    <div class="layer rv"><div class="n">04</div><h4>Knowledge<small>Versioned in Git, per agent</small></h4><div class="chips"><span class="chip">Rules</span><span class="chip">Playbooks</span><span class="chip">Known pitfalls</span><span class="chip">Resolved cases</span><span class="chip">Replayable evals</span></div></div>
-    <div class="layer rv"><div class="n">05</div><h4>Data<small>Connectors, read-only by default</small></h4><div class="chips"><span class="chip">Stripe</span><span class="chip">PostHog</span><span class="chip">BigQuery</span><span class="chip">Intercom API</span><span class="chip">Notion API</span><span class="chip">GitHub code</span><span class="chip">Figma</span></div></div>
-    <div class="layer rv"><div class="n">06</div><h4>Execution<small>Where it runs</small></h4><div class="chips"><span class="chip">Scheduled Claude Code routines</span><span class="chip">Render</span><span class="chip">GitHub Actions</span></div></div>
-  </div>
-  <div class="legend"><span><i style="background:var(--lime)"></i>AI agent (Claude Code)</span><span><i style="border:1.5px solid var(--lime)"></i>Deterministic app or monitor: plain code where no judgement is needed</span></div>
-
   <div class="block">
-    <div class="kicker rv">Anatomy of one agent</div>
-    <h3 class="t rv">Nothing reaches a team without passing the harness.</h3>
     <div class="flow rv">
       <div class="node"><div class="lab">Trigger</div><p>A scheduled routine, a Slack mention or a "QA this" command.</p></div>
       <div class="pipe"></div>
@@ -485,6 +436,21 @@ footer .note{margin-top:64px;font-size:13px;color:#8A909A;max-width:780px}
     <div class="kicker rv">Deep dive · one real agent</div>
     <h3 class="t rv">How the payment disputes agent works.</h3>
     <p class="lede rv">Every Stripe alert triggers a full investigation. The agent reads six sources, builds the case file and recommends fight or accept. A human makes the call in Stripe, and the outcome teaches the agent.</p>
+    <div class="lanes rv">
+      <div class="lanelab"><span class="k sys">System</span><span class="k ai">AI agent</span><span class="k hu">Human</span></div>
+      <ol class="fsteps">
+        <li class="sys">Stripe alert lands in Slack</li>
+        <li class="ai">360° investigation of the case</li>
+        <li class="sys">Data read, never changed</li>
+        <li class="ai">Score and recommendation</li>
+        <li class="ai">Case file posted in Slack</li>
+        <li class="hu">Submits or accepts in Stripe</li>
+        <li class="sys">Dispute won or lost</li>
+        <li class="ai">Score and patterns recalibrated</li>
+      </ol>
+    </div>
+    <details class="more rv">
+      <summary>See details: architecture, guardrails and tests</summary>
     <div class="dstats rv">
       <div><b>26</b><span>eval cases</span></div>
       <div><b>6</b><span>end gates before posting</span></div>
@@ -531,19 +497,6 @@ footer .note{margin-top:64px;font-size:13px;color:#8A909A;max-width:780px}
       </div>
     </div>
 
-    <div class="lanes rv">
-      <div class="lanelab"><span class="k sys">System</span><span class="k ai">AI agent</span><span class="k hu">Human</span></div>
-      <ol class="fsteps">
-        <li class="sys">Stripe alert lands in Slack</li>
-        <li class="ai">360° investigation of the case</li>
-        <li class="sys">Data read, never changed</li>
-        <li class="ai">Score and recommendation</li>
-        <li class="ai">Case file posted in Slack</li>
-        <li class="hu">Submits or accepts in Stripe</li>
-        <li class="sys">Dispute won or lost</li>
-        <li class="ai">Score and patterns recalibrated</li>
-      </ol>
-    </div>
     <div class="why rv">
       <div class="whyhead"><span class="lab">Guardrails, and why</span></div>
       <div class="whygrid">
@@ -559,6 +512,7 @@ footer .note{margin-top:64px;font-size:13px;color:#8A909A;max-width:780px}
       <div><div class="lab">How it's tested</div><p>26 regression cases the agent is replayed against; each prediction checked against the real Stripe outcome.</p></div>
       <div><div class="lab">How it was adopted</div><p>Launched to the disputes owner as an MVP, then coached through their feedback.</p></div>
     </div>
+    </details>
   </div>
 
   <div class="quote rv">
@@ -617,40 +571,6 @@ footer .note{margin-top:64px;font-size:13px;color:#8A909A;max-width:780px}
     <div class="rv"><b>86% → 97%</b><span>CSAT, held through the scale-up</span></div>
     <div class="rv"><b>13 → 1.2 min</b><span>median first reply</span></div>
     <div class="rv"><b>−30%</b><span>care cost per paid order in 2026</span></div>
-    <div class="rv"><b>88% → 96%</b><span>quality score, 1,100+ audits a quarter</span></div>
-    <div class="rv"><b>4 → 17</b><span>people, four hubs, 24/7</span></div>
-    <div class="rv"><b>3 mo → 2 wks</b><span>to onboard a new agent</span></div>
-    <div class="hl rv"><b>Air France-KLM</b><span>care made ready for the partnership launch</span></div>
-  </div>
-  <div class="model">
-    <div class="rv"><h4>People</h4><p>Hubs in Brazil, Colombia, Morocco and the Philippines, led through team leads.</p></div>
-    <div class="rv"><h4>Clean data</h4><p>Team = contact reason, tag = root cause. Untagged conversations reopen automatically.</p></div>
-    <div class="rv"><h4>Knowledge</h4><p>An internal knowledge base built from scratch; help center in 13 languages.</p></div>
-    <div class="rv"><h4>Quality</h4><p>Scorecards, coaching and a team-leader layer.</p></div>
-    <div class="rv"><h4>Care × Product</h4><p>One escalation path and weekly priorities with Product: fix causes, not tickets.</p></div>
-    <div class="rv"><h4>Numbers leaders trust</h4><p>Contact rate as a product KPI, live cost to serve, Care in the investor report.</p></div>
-  </div>
-</div></section>
-
-<section class="part" id="approach"><div class="wrap">
-  <div class="partlabel rv"><i>3</i>How I'd start with you</div>
-  <h2 class="rv">Measure. Structure. <em>Then automate.</em></h2>
-  <div class="days rv">
-    <div><div class="k">DAYS 0–30</div><h4>Measure</h4><ul><li>Real volume and cost, from the source</li><li>Read every conversation with AI, not a sample of tags</li><li>One north-star KPI agreed with leadership</li></ul></div>
-    <div><div class="k">DAYS 31–60</div><h4>Structure</h4><ul><li>Clean taxonomy and explicit rules</li><li>Knowledge for the most frequent cases</li><li>One owner per flow</li></ul></div>
-    <div><div class="k" style="color:var(--mute)">DAYS 61–90</div><h4>Automate</h4><ul><li>Apps inside the tools teams already use</li><li>AI agents under guardrails, in shadow mode first</li><li>Evals and ROI reviewed every month</li></ul></div>
-  </div>
-  <p class="rule rv">The rule: <span>automate only what is already measured and documented.</span></p>
-</div></section>
-
-<section class="part" id="career"><div class="wrap">
-  <div class="partlabel rv"><i>4</i>Career</div>
-  <h2 class="rv">12 years in customer operations.</h2>
-  <div class="career">
-    <div class="job rv"><div class="when">2024 – now</div><div><h4>Kolet <small>· travel eSIM · founding team</small></h4><p>Global Head of Customer Operations (since Jul 2025). Customer Care Lead before that: built Care from scratch and scaled it 15× in the first year.</p></div></div>
-    <div class="job rv"><div class="when">2023 – 2024</div><div><h4>Alan <small>· health insurance</small></h4><p>User Care Expert &amp; Product Referent: data-led processes, tooling and product feedback.</p></div></div>
-    <div class="job rv"><div class="when">2021 – 2023</div><div><h4>Back Market <small>· refurbished electronics</small></h4><p>Lead Logistics Support: scaled the team from 2 to 20 across the US and Europe, 120+ B2B sellers, BPO partners.</p></div></div>
-    <div class="job rv"><div class="when">2014 – 2021</div><div><h4>Apple <small>· Cork, Ireland</small></h4><p>From specialist to Team Lead of Tier 1 &amp; 2 technical support across EMEIA and the Americas: 20+ people, 93% CSAT.</p></div></div>
   </div>
 </div></section>
 
