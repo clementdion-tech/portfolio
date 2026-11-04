@@ -357,6 +357,10 @@ footer .note{margin-top:64px;font-size:13px;color:#8A909A;max-width:780px}
 .more summary::-webkit-details-marker{display:none}
 .more summary::after{content:" ↓"}
 .more[open] summary::after{content:" ↑"}
+.trigs{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+.trig.alt{background:transparent;color:var(--lime);border:1.5px solid var(--lime);padding:7.5px 16.5px}
+.plab{margin-right:auto;font:600 11px 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:#fff}
+.lanes + .lanes{margin-top:10px}
 </style>
 </head>
 <body class="no-js">
@@ -457,34 +461,34 @@ footer .note{margin-top:64px;font-size:13px;color:#8A909A;max-width:780px}
         <path d="M0 80 C60 80 40 300 100 300"/><path d="M0 168 C60 168 40 300 100 300"/><path d="M0 256 C60 256 40 300 100 300"/><path d="M0 344 C60 344 40 300 100 300"/><path d="M0 432 C60 432 40 300 100 300"/><path d="M0 520 C60 520 40 300 100 300"/>
       </svg>
       <div class="dcenter">
-        <div class="trig">⚡ Stripe alert in Slack</div>
+        <div class="trigs"><div class="trig">⚡ Path 1 · Stripe alert in Slack</div><div class="trig alt">⏱ Path 2 · Daily payment sweep</div></div>
         <div class="hframe">
           <div class="htag">Harness · guardrails</div>
           <div class="abar"><span class="dot"></span>Claude Code agent</div>
           <ol class="steps">
-            <li>Load rules and memory</li><li>Route the notification</li><li>360° investigation</li>
+            <li>Load rules and memory</li><li>Route: dispute or sweep</li><li>360° investigation</li>
             <li>Publish the recommendation</li><li>Record the prediction</li><li>Learn from the outcome</li>
           </ol>
           <div class="gates"><span>Read-only Stripe</span><span>Gated warehouse reads</span><span>Refund check first</span><span>6 end gates</span><span>Edit circuit breaker</span></div>
         </div>
         <div class="updown"><span>↑ reads</span><span>writes ↓</span></div>
         <div class="dlab" style="margin-top:6px">Memory versioned in Git</div>
-        <div class="mem"><div><code>agent/</code><span>Prompt and playbooks</span></div><div><code>knowledge/</code><span>Patterns and score</span></div><div><code>cases/</code><span>Dispute case files</span></div><div><code>evals/</code><span>Regression cases</span></div></div>
+        <div class="mem"><div><code>agent/</code><span>Prompt and playbooks</span></div><div><code>knowledge/</code><span>Known fraud patterns and score</span></div><div><code>cases/</code><span>Dispute case files</span></div><div><code>evals/</code><span>Regression cases</span></div></div>
       </div>
       <svg class="wires" viewBox="0 0 100 600" preserveAspectRatio="none" aria-hidden="true">
         <path d="M0 300 C50 300 50 190 100 190"/><path d="M0 300 C50 300 50 300 100 300"/>
       </svg>
       <div class="dcol dout">
         <div class="dlab">Writes / returns</div>
-        <div class="out"><b>Slack</b><span>Case file and fight-or-accept recommendation</span></div>
+        <div class="out"><b>Slack</b><span>Dispute case file with fight-or-accept, or a sweep alert with refund-before-dispute</span></div>
         <div class="out"><b>GitHub</b><span>Case files and knowledge</span></div>
-        <div class="human"><b>👤 Human decides</b><span>Submits the evidence or accepts the dispute in Stripe</span></div>
-        <div class="tune">↺ The Stripe outcome tunes the score and the patterns</div>
+        <div class="human"><b>👤 Human decides</b><span>Fights or accepts the dispute, or refunds before one is filed</span></div>
+        <div class="tune">↺ Each outcome tunes the score; confirmed new patterns join the registry</div>
       </div>
     </div>
 
     <div class="lanes rv">
-      <div class="lanelab"><span class="k sys">System</span><span class="k ai">AI agent</span><span class="k hu">Human</span></div>
+      <div class="lanelab"><span class="plab">Path 1 · Dispute received</span><span class="k sys">System</span><span class="k ai">AI agent</span><span class="k hu">Human</span></div>
       <ol class="fsteps">
         <li class="sys">Stripe alert lands in Slack</li>
         <li class="ai">360° investigation of the case</li>
@@ -494,6 +498,19 @@ footer .note{margin-top:64px;font-size:13px;color:#8A909A;max-width:780px}
         <li class="hu">Submits or accepts in Stripe</li>
         <li class="sys">Dispute won or lost</li>
         <li class="ai">Score and patterns recalibrated</li>
+      </ol>
+    </div>
+    <div class="lanes rv">
+      <div class="lanelab"><span class="plab">Path 2 · Daily sweep, before any dispute</span></div>
+      <ol class="fsteps">
+        <li class="sys">Scheduled daily run</li>
+        <li class="ai">Match known fraud patterns: card testing, early fraud warnings</li>
+        <li class="ai">Blind scan for new patterns</li>
+        <li class="ai">Mechanism confirmed in code and logs</li>
+        <li class="ai">Alert in Slack: refund before dispute</li>
+        <li class="hu">Refunds and blocks in Stripe</li>
+        <li class="sys">Account disputes later, or not</li>
+        <li class="ai">New pattern added to the registry</li>
       </ol>
     </div>
     <details class="more rv">
