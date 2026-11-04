@@ -631,5 +631,32 @@ footer .note{margin-top:64px;font-size:13px;color:#8A909A;max-width:780px}
   document.querySelectorAll('.team b[data-count]').forEach(function(e){ io.observe(e); });
 })();
 </script>
+<script>
+/* Draw the agent diagram wires from the real box positions */
+(function(){
+  function mid(e){ var b = e.getBoundingClientRect(); return b.top + b.height / 2; }
+  function draw(svg, ys, cy, fromLeft){
+    var r = svg.getBoundingClientRect(); if (!r.height) return;
+    svg.setAttribute('viewBox', '0 0 100 ' + r.height);
+    var c = cy - r.top;
+    svg.innerHTML = ys.map(function(y){ y -= r.top;
+      return fromLeft ? '<path d="M0 ' + y + ' C60 ' + y + ' 40 ' + c + ' 100 ' + c + '"/>'
+                      : '<path d="M0 ' + c + ' C50 ' + c + ' 50 ' + y + ' 100 ' + y + '"/>'; }).join('');
+  }
+  function wire(){
+    document.querySelectorAll('.dgm').forEach(function(g){
+      var sv = g.querySelectorAll('.wires'), hf = g.querySelector('.hframe');
+      if (sv.length < 2 || !hf) return;
+      var cy = mid(hf);
+      draw(sv[0], [].map.call(g.querySelectorAll('.dcol:first-child .src'), mid), cy, true);
+      draw(sv[1], [].map.call(g.querySelectorAll('.dout .out'), mid), cy, false);
+    });
+  }
+  wire();
+  window.addEventListener('load', wire);
+  window.addEventListener('resize', wire);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(wire);
+})();
+</script>
 </body>
 </html>
